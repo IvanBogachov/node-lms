@@ -1,15 +1,9 @@
-import {
-  getAllStudents,
-  getStudentById,
-  createStudent,
-  deleteStudent,
-  updateStudent,
-} from '../services/students.js';
+import * as studentService from '../services/students.js';
 import createHttpError from 'http-errors';
 
 export const getStudentsController = async (req, res) => {
   try {
-    const students = await getAllStudents();
+    const students = await studentService.getAllStudents();
 
     res.json({
       status: 200,
@@ -23,7 +17,7 @@ export const getStudentsController = async (req, res) => {
 
 export const getStudentByIdController = async (req, res, next) => {
   const { studentId } = req.params;
-  const student = await getStudentById(studentId);
+  const student = await studentService.getStudentById(studentId);
   // Відповідь, якщо контакт не знайдено
   //   if (!student) {
   //     res.status(404).json({
@@ -47,7 +41,7 @@ export const getStudentByIdController = async (req, res, next) => {
 };
 
 export const createStudentController = async (req, res) => {
-  const student = await createStudent(req.body);
+  const student = await studentService.createStudent(req.body);
 
   res.status(201).json({
     status: 201,
@@ -59,7 +53,7 @@ export const createStudentController = async (req, res) => {
 export const deleteStudentController = async (req, res, next) => {
   const { studentId } = req.params;
 
-  const student = await deleteStudent(studentId);
+  const student = await studentService.deleteStudent(studentId);
 
   if (!student) {
     next(createHttpError(404, 'Student not found'));
@@ -72,7 +66,7 @@ export const deleteStudentController = async (req, res, next) => {
 export const upsertStudentController = async (req, res, next) => {
   const { studentId } = req.params;
 
-  const result = await updateStudent(studentId, req.body, {
+  const result = await studentService.updateStudent(studentId, req.body, {
     upsert: true,
   });
 
@@ -92,7 +86,7 @@ export const upsertStudentController = async (req, res, next) => {
 
 export const patchStudentController = async (req, res, next) => {
   const { studentId } = req.params;
-  const result = await updateStudent(studentId, req.body);
+  const result = await studentService.updateStudent(studentId, req.body);
 
   if (!result) {
     next(createHttpError(404, 'Student not found'));
