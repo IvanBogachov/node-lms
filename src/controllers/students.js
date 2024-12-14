@@ -1,18 +1,24 @@
 import * as studentService from '../services/students.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 import createHttpError from 'http-errors';
 
 export const getStudentsController = async (req, res) => {
-  try {
-    const students = await studentService.getAllStudents();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
 
-    res.json({
-      status: 200,
-      message: 'Successfully found students!',
-      data: students,
-    });
-  } catch (err) {
-    next(err);
-  }
+  const students = await studentService.getAllStudents({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  });
+
+  res.json({
+    status: 200,
+    message: 'Successfully found students!',
+    data: students,
+  });
 };
 
 export const getStudentByIdController = async (req, res, next) => {

@@ -19,31 +19,25 @@ router.post(
 );
 router.delete(
   '/students/:studentId',
+  isValidId,
   ctrlWrapper(studentController.deleteStudentController),
 );
 router.put(
   '/students/:studentId',
+  isValidId,
+  validateBody(studentValidator.createStudentSchema),
   ctrlWrapper(studentController.upsertStudentController),
 );
 router.patch(
   '/students/:studentId',
+  isValidId,
+  validateBody(studentValidator.updateStudentSchema),
   ctrlWrapper(studentController.patchStudentController),
 );
 router.post(
   '/',
   validateBody(studentValidator.createStudentSchema),
   ctrlWrapper(studentController.createStudentController),
-);
-router.put(
-  '/students/:studentId',
-  validateBody(studentValidator.createStudentSchema),
-  ctrlWrapper(studentController.upsertStudentController),
-);
-
-router.patch(
-  '/students/:studentId',
-  validateBody(studentValidator.updateStudentSchema),
-  ctrlWrapper(studentController.patchStudentController),
 );
 
 export default router;
