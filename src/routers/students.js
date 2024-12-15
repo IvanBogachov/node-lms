@@ -9,12 +9,13 @@ const router = Router();
 
 router.get('/students', ctrlWrapper(studentController.getStudentsController));
 router.get(
-  '/:studentId',
+  '/students/:studentId',
   isValidId,
   ctrlWrapper(studentController.getStudentByIdController),
 );
 router.post(
   '/students',
+  validateBody(studentValidator.createStudentSchema),
   ctrlWrapper(studentController.createStudentController),
 );
 router.delete(
