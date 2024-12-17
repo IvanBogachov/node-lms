@@ -13,6 +13,13 @@ router.get(
   isValidId,
   ctrlWrapper(studentController.getStudentByIdController),
 );
+
+// router.post(
+//   '/register',
+//   validateBody(studentValidator.createStudentSchema),
+//   ctrlWrapper(studentController.createStudentController),
+// );
+
 router.post(
   '/students',
   validateBody(studentValidator.createStudentSchema),

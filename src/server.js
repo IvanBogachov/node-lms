@@ -2,7 +2,8 @@ import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 
-import studentsRouter from './routers/students.js'; // Імпортуємо роутер
+// import studentsRouter from './routers/students.js'; // Імпортуємо роутер
+import router from './routers/index.js';
 import { env } from './utils/env.js';
 // Імпортуємо middleware
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -35,7 +36,9 @@ export const startServer = () => {
     });
   });
 
-  app.use(studentsRouter); // Додаємо роутер до app як middleware
+  // app.use(studentsRouter); // Додаємо роутер до app як middleware
+
+  app.use(router);
 
   app.use('*', notFoundHandler);
 
