@@ -1,4 +1,6 @@
 import { model, Schema } from 'mongoose';
+import { typeList } from '../constants.js';
+import { handleSaveError, setUpdateSettings } from '../db/models/hooks.js';
 
 const studentsSchema = new Schema(
   {
@@ -13,7 +15,7 @@ const studentsSchema = new Schema(
     gender: {
       type: String,
       required: true,
-      enum: ['male', 'female', 'other'],
+      enum: typeList,
     },
     avgMark: {
       type: Number,
@@ -30,4 +32,7 @@ const studentsSchema = new Schema(
     versionKey: false,
   },
 );
+studentsSchema.post('save', handleSaveError);
+studentsSchema.pre("findOneAndUpdate", setUpdateSettings);
+studentsSchema.post('findOneAndUpdate', handleSaveError);
 export const StudentsCollection = model('students', studentsSchema);
