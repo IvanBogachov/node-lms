@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { typeList } from '../constants.js';
+import { typeList } from '../constants/index.js';
 import { handleSaveError, setUpdateSettings } from '../db/models/hooks.js';
 
 const studentsSchema = new Schema(
@@ -26,6 +26,11 @@ const studentsSchema = new Schema(
       required: true,
       default: false,
     },
+    parentId: {
+      // нова властивість
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+    },
   },
   {
     timestamps: true,
@@ -33,6 +38,6 @@ const studentsSchema = new Schema(
   },
 );
 studentsSchema.post('save', handleSaveError);
-studentsSchema.pre("findOneAndUpdate", setUpdateSettings);
+studentsSchema.pre('findOneAndUpdate', setUpdateSettings);
 studentsSchema.post('findOneAndUpdate', handleSaveError);
 export const StudentsCollection = model('students', studentsSchema);
