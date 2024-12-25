@@ -40,4 +40,5 @@ const studentsSchema = new Schema(
 studentsSchema.post('save', handleSaveError);
 studentsSchema.pre('findOneAndUpdate', setUpdateSettings);
 studentsSchema.post('findOneAndUpdate', handleSaveError);
+
 export const StudentsCollection = model('students', studentsSchema);

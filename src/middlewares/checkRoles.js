@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 
-import { StudentsCollection } from '../models/student';
-import { ROLES } from '../constants.js';
+import { StudentsCollection } from '../models/student.js';
+import { ROLES } from '../constants/index.js';
 
 export const checkRoles =
   (...roles) =>
